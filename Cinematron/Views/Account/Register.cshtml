@@ -1,0 +1,50 @@
+﻿@model RegisterViewModel
+@{
+    Layout = "";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cinematron - Register</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Watch movies and series for free!">
+    <meta name="keywords" content="Movies, anime, series">
+    <meta name="author" content="Alexei Ulanov">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/css/login.css">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body class="bg-secondary">
+    <div class="container right-panel-active" id="container">
+        <div class="form-container sign-up-container">
+            <form method="post" asp-controller="Account" asp-action="Register" enctype="multipart/form-data">
+                <h1>Create Account</h1>
+                <span>or use your email for registration</span>
+                <div class="avatar avatar--140">
+                    <div class="profile-avatar-uploader">
+                        <span class="profile-avatar-uploader-icon material-icons">cloud_upload</span>
+                        <input class="input-file" type="file" name="Avatar" />
+                    </div>
+                </div>
+                <input asp-for="UserName" type="text" placeholder="Name" />
+                <input asp-for="Email" type="email" placeholder="Email" />
+                <input asp-for="Password" type="password" placeholder="Password" />
+                <button>Sign Up</button>
+                <span asp-validation-for="UserName"></span>
+                <span asp-validation-for="Email"></span>
+                <span asp-validation-for="Password"></span>
+            </form>
+        </div>
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                    <h1>Welcome Back!</h1>
+                    <p>To keep connected with us please login with your personal info</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

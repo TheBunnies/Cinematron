@@ -1,0 +1,31 @@
+﻿@inject Cinematron.DAL.Contracts.IMoviesService MoviesService
+@{
+    ViewData["Title"] = "Movies catalog";
+    var movies = MoviesService.GetMovies();
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/card.css">
+}
+<div class="card-container">
+    @foreach (var movie in movies)
+    {
+        <div class="property-card">
+            <a asp-controller="Video" asp-action="Movie" asp-route-id="@movie.Id">
+                <div class="property-image" style="background-image: url(@movie.ThumbnailUrl);">
+                    <div class="property-image-title">
+                    </div>
+                </div>
+            </a>
+            <div class="property-description">
+                <h5>@movie.Title</h5>
+                <p>@movie.Description</p>
+            </div>
+        </div>
+    }
+    @if (movies.Count <= 0)
+    {
+        <p style="font-size:20px" class="text-white">Currently no movies avaliable :(</p>
+    }
+</div>
+
+

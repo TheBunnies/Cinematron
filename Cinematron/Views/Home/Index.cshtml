@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container" style="text-align: left;">
+        <h1>Watch most popular movies with your friends!</h1>
+        <p class="text-body"><strong>Cinematron is the #1 movies hosting platform on the internet.</strong></p>
+    </div>
+</div>
+<div class="container-fluid mt-3 p-3 my-3 text-white">
+    <h1>Watch it on every platform. <img style="height: 20rem;margin-left: 40%;" src="~/Images/site/multiplatform.png"></h1>
+</div>
+<div class="container-fluid mt-3 p-3 my-3 bg-dark text-white text-center">
+    <h1>FAQ:</h1>
+    <div id="accordion">
+        <div class="card bg-dark">
+            <div class="card-header bg-muted text-left">
+                <a style="font-size: 2rem;" class="card-link text-warning" data-toggle="collapse" href="#collapseOne">
+                    How do I watch movies with my friends? <i class="fas fa-plus"></i>
+                </a>
+            </div>
+            <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                <div class="card-body">
+                    Just click on the "Watch with your friends" tab and create a room where you can invite your friends to!
+                </div>
+            </div>
+            <div class="card bg-dark">
+                <div class="card-header bg-muted text-left">
+                    <a style="font-size: 2rem;" class="card-link text-warning" data-toggle="collapse" href="#collapseTwo">
+                        How frequent uploads are? <i class="fas fa-plus"></i>
+                    </a>
+                </div>
+                <div id="collapseTwo" class="collapse" data-parent="#accordion">
+                    <div class="card-body">
+                        We're uploading approximately one movie per minute!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+ </div>

@@ -1,0 +1,66 @@
+﻿@using Cinematron.Components
+@model Cinematron.DAL.Models.Show
+@{
+    ViewData["Title"] = @Model.Title;
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/video.css">
+}
+<table>
+    <tr>
+        <td rowspan="2">
+            <div class="image-title">
+                <img id="myImg" src="@Model.ThumbnailUrl" alt="Movie">
+            </div>
+        </td>
+        <td>
+            <div class="text-title">
+                <h1 class="text-white"><strong>@Model.Title</strong></h1>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td style="vertical-align: top;">
+            <div class="text-white">
+                <h5>Type: Show</h5><br>
+                <h5>Duration: @Model.Duration</h5>
+            </div>
+        </td>
+    </tr>
+</table>
+<textarea readonly class="text-white">@Model.Description</textarea>
+@(await Html.RenderComponentAsync<ShowEpisodeSwitcher>(RenderMode.ServerPrerendered, new { Episodes = Model.Episodes }))
+<div id="customModal" class="modal-custom">
+    <span class="close-custom">&times;</span>
+    <img class="modal-content-custom" id="img01">
+    <div id="caption"></div>
+</div>
+@section Scripts {
+    <script>
+        var modal = document.getElementById("customModal");
+
+
+        var img = document.getElementById("myImg");
+        var modalImg = document.getElementById("img01");
+        var captionText = document.getElementById("caption");
+        img.onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            captionText.innerHTML = this.alt;
+        }
+
+
+        var span = document.getElementsByClassName("close-custom")[0];
+
+
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+        function loadVideo() {
+            let video = document.querySelector("video");
+            video.load();
+        }
+    </script>
+    <script src="~/_framework/blazor.server.js"></script>
+}
+

@@ -1,0 +1,54 @@
+﻿@using Cinematron.DAL.Contracts
+@using Cinematron.DAL.Models 
+@model List<IWatchable>
+@{
+    ViewData["Title"] = "Search results";
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/card.css">
+}
+<div class="card-container">
+    @foreach (var watchable in Model)
+    {
+        if (watchable is Movie)
+        {
+            <div class="property-card">
+                <a asp-controller="Video" asp-action="Movie" asp-route-id="@watchable.Id">
+                    <div class="property-image" style="background-image: url(@watchable.ThumbnailUrl);">
+                        <div class="property-image-title">
+                        </div>
+                    </div>
+                </a>
+                <div class="property-description">
+                    <h5>@watchable.Title</h5>
+                    <p>@watchable.Description</p>
+                    <p>Type: Movie</p>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="property-card">
+                <a asp-controller="Video" asp-action="Show" asp-route-id="@watchable.Id">
+                    <div class="property-image" style="background-image: url(@watchable.ThumbnailUrl);">
+                        <div class="property-image-title">
+                        </div>
+                    </div>
+                </a>
+                <div class="property-description">
+                    <h5>@watchable.Title</h5>
+                    <p>@watchable.Description</p>
+                    <p>Type: Series</p>
+                </div>
+            </div>
+        }
+
+    }
+    @if (Model.Count <= 0)
+    {
+        <p style="font-size:20px" class="text-white">No movies/series matching your request :(</p>
+    }
+</div>
+
+
+

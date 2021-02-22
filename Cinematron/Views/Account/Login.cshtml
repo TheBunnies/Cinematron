@@ -1,0 +1,42 @@
+﻿@model LoginViewModel
+@{
+    Layout = "";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cinematron - Login</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Watch movies and series for free!">
+    <meta name="keywords" content="Movies, anime, series">
+    <meta name="author" content="Alexei Ulanov">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/css/login.css">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body class="bg-secondary">
+    <div class="container" id="container">
+        <div class="form-container sign-in-container">
+            <form method="post" asp-controller="Account" asp-action="Login">
+                <h1>Sign in</h1>
+                <span>or use your account</span>
+                <input asp-for="Username" placeholder="Username" />
+                <input asp-for="Password" type="password" placeholder="Password" />
+                <button type="submit">Sign In</button>
+                <span asp-validation-for="Username"></span>
+                <span asp-validation-for="Password"></span>
+            </form>
+        </div>
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-right">
+                    <h1>Hello, User!</h1>
+                    <p>Enter your personal details and start journey with us</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

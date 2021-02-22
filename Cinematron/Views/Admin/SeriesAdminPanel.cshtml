@@ -1,0 +1,45 @@
+﻿@model ShowAddViewModel
+@{
+    ViewData["Title"] = "Shows control panel";
+}
+<div class="container text-white form-group" style="border: 1px solid black;">
+    <form method="post" asp-controller="Admin" asp-action="SeriesAdminPanel" enctype="multipart/form-data" id="form">
+        <h3>Please enter name of the series: </h3>
+        <input type="text" asp-for="Name" /><br>
+        <h3>Please enter description of the series: </h3>
+        <textarea asp-for="Description"></textarea>
+        <h3>Please enter average duration of the series: </h3>
+        <input type="text" asp-for="AverageDuration" /><br>
+        <h3>Please select the image title to upload: </h3>
+        <input type="file" asp-for="Title" /><br>
+        <div id="seriesContainer" style="border: 5px solid green;">
+            <h3>Please select the Episode 1 to upload: </h3>
+            <input type="file" name="Episodes" /><br>
+        </div>
+        <button class="btn btn-success" type="button" onclick="createEpisode()">Add an episode</button>
+        <button class="btn btn-danger" type="button" onclick="deleteEpisode()">Delete an episode</button>
+        <input style="display: block;margin-top: 10px;" type="submit" value="Upload to Cinematron" />
+    </form>
+    <span class="text-success">@ViewBag.Success</span>
+</div>
+@section Scripts {
+    <script>
+        var doc = document.getElementById("seriesContainer");
+        var counter = 2;
+        function createEpisode() {
+            var newParagraph = document.createElement("h3");
+            newParagraph.innerHTML = "Please select the Episode " + counter + " to upload";
+            ++counter;
+            var newInput = document.createElement("input");
+            newInput.setAttribute("type", "file");
+            newInput.setAttribute("name", "Episodes");
+            doc.appendChild(newParagraph);
+            doc.appendChild(newInput);
+        }
+        function deleteEpisode() {
+            for (let i = 0; i < 2; i++)
+                doc.removeChild(doc.lastElementChild);
+            --counter;
+        }
+    </script>
+}

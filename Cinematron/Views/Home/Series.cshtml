@@ -1,0 +1,29 @@
+﻿@inject Cinematron.DAL.Contracts.IShowsService ShowsService
+@{
+    ViewData["Title"] = "Series catalog";
+    var series = ShowsService.GetShows();
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/card.css">
+}
+<div class="card-container">
+    @foreach (var show in series)
+    {
+        <div class="property-card">
+            <a asp-controller="Video" asp-action="Show" asp-route-id="@show.Id">
+                <div class="property-image" style="background-image: url(@show.ThumbnailUrl);">
+                    <div class="property-image-title">
+                    </div>
+                </div>
+            </a>
+            <div class="property-description">
+                <h5>@show.Title</h5>
+                <p>@show.Description</p>
+            </div>
+        </div>
+    }
+    @if (series.Count <= 0)
+    {
+        <p style="font-size:20px" class="text-white">Currently no series avaliable :(</p>
+    }
+</div>

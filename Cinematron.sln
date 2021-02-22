@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cinematron", "Cinematron\Cinematron.csproj", "{EFFE0E03-1624-4CBB-8DB3-13C7C85B8D11}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cinematron.DAL", "Cinematron.DAL\Cinematron.DAL.csproj", "{64D3FDB6-1F3C-477A-9756-7B004998059F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EFFE0E03-1624-4CBB-8DB3-13C7C85B8D11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFFE0E03-1624-4CBB-8DB3-13C7C85B8D11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFFE0E03-1624-4CBB-8DB3-13C7C85B8D11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFFE0E03-1624-4CBB-8DB3-13C7C85B8D11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64D3FDB6-1F3C-477A-9756-7B004998059F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64D3FDB6-1F3C-477A-9756-7B004998059F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64D3FDB6-1F3C-477A-9756-7B004998059F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64D3FDB6-1F3C-477A-9756-7B004998059F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E04D468D-6642-4BE4-9239-791D6C98D2E3}
+	EndGlobalSection
+EndGlobal

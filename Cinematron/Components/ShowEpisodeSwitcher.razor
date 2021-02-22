@@ -1,0 +1,39 @@
+﻿@using Cinematron.DAL.Models
+@using Microsoft.AspNetCore.Routing
+
+@inject LinkGenerator LinkGenerator
+@inject IJSRuntime js
+
+<div style="display:flex; justify-content: center;">
+    <video id="video" controls>
+        <source src="@CurrentEpisodeUrl" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</div>
+<div style="display:flex; justify-content: flex-start;">
+
+    @for (int i = 0; i < Episodes.Count; i++)
+    {
+        int t = i;
+        <div style="font-size:28px;" class="text-white">
+            <button class="btn btn-danger" style="padding: 20px;" @onclick="(() => ChangeEpisode(t))">@(i+1)</button>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public List<Episode> Episodes { get; set; }
+    public string CurrentEpisodeUrl { get; set; }
+
+
+    protected override void OnInitialized()
+    {
+        CurrentEpisodeUrl = LinkGenerator.GetPathByAction("GetShow", "Video", new { path = Episodes.FirstOrDefault().VideoUrl });
+    }
+    private void ChangeEpisode(int id)
+    {
+        CurrentEpisodeUrl = LinkGenerator.GetPathByAction("GetShow", "Video", new { path = Episodes[id].VideoUrl });
+        js.InvokeVoidAsync("loadVideo");
+    }
+}

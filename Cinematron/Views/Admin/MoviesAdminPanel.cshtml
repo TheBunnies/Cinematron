@@ -1,0 +1,20 @@
+﻿@model MovieAddViewModel
+@{
+    ViewData["Title"] = "Movies control panel";
+}
+<div class="container text-white form-group" style="border: 1px solid black;">
+    <form method="post" asp-controller="Admin" asp-action="MoviesAdminPanel" enctype="multipart/form-data">
+        <h3>Please enter name of the movie: </h3>
+        <input type="text" asp-for="Name" /><br>
+        <h3>Please enter description of the movie: </h3>
+        <textarea asp-for="Description"></textarea>
+        <h3>Please enter duration of the movie: </h3>
+        <input type="text" asp-for="Duration"/><br>
+        <h3>Please select the image title to upload: </h3>
+        <input type="file" asp-for="Title" name="Title" /><br>
+        <h3>Please select the movie to upload: </h3>
+        <input type="file" asp-for="Movie" name="Movie" accept="video/mp4"/><br>
+        <input type="submit" value="Upload to Cinematron" />
+    </form>
+    <span class="text-success">@ViewBag.Success</span>
+</div>
