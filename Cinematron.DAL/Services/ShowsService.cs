@@ -1,6 +1,7 @@
 ﻿using Cinematron.DAL.Contracts;
 using Cinematron.DAL.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,38 +13,88 @@ namespace Cinematron.DAL.Services
     public class ShowsService : IShowsService
     {
         private readonly CinematronDbContext _dbContext;
-        public ShowsService(CinematronDbContext dbContext)
+        private readonly ILogger<ShowsService> _logger;
+        public ShowsService(CinematronDbContext dbContext, ILogger<ShowsService> logger)
         {
             _dbContext = dbContext;
+            _logger = logger;
         }
         public List<Show> GetShows()
         {
-             return _dbContext.Shows.ToList();
+            try
+            {
+                return _dbContext.Shows.ToList();
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, $"{this.GetType().Name} threw an exception with the following description: {ex.Message}");
+            }
+            return new List<Show>();
+             
         }
         public async Task<Show> GetShowAsync(int id)
         {
-            return await _dbContext.Shows.Include(x => x.Episodes).FirstAsync(x => x.Id == id);
+            try
+            {
+                return await _dbContext.Shows.Include(x => x.Episodes).FirstAsync(x => x.Id == id);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, $"{this.GetType().Name} threw an exception with the following description: {ex.Message}");
+            }
+            return await Task.FromResult(new Show());
         }
         public async Task AddShowAsync(Show show)
         {
-            await _dbContext.Shows.AddAsync(show);
-            await _dbContext.SaveChangesAsync();
+            try
+            {
+                await _dbContext.Shows.AddAsync(show);
+                await _dbContext.SaveChangesAsync();
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, $"{this.GetType().Name} threw an exception with the following description: {ex.Message}");
+            }
+            
         }
         public async Task RemoveShowAsync(Show show)
         {
-             _dbContext.Shows.Remove(show);
-            await _dbContext.SaveChangesAsync();
+            try
+            {
+                _dbContext.Shows.Remove(show);
+                await _dbContext.SaveChangesAsync();
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, $"{this.GetType().Name} threw an exception with the following description: {ex.Message}");
+            }
         }
         public async Task AddEpisodeAsync(Show show, Episode episode)
         {
-            episode.Show = show;
-            await _dbContext.Episodes.AddAsync(episode);
-            await _dbContext.SaveChangesAsync();
+            try
+            {
+                episode.Show = show;
+                await _dbContext.Episodes.AddAsync(episode);
+                await _dbContext.SaveChangesAsync();
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, $"{this.GetType().Name} threw an exception with the following description: {ex.Message}");
+            }
+            
         }
         public async Task RemoveEpisodeAsync(Episode episode)
         {
-            _dbContext.Episodes.Remove(episode);
-            await _dbContext.SaveChangesAsync();
+            try
+            {
+                _dbContext.Episodes.Remove(episode);
+                await _dbContext.SaveChangesAsync();
+            }
+            catch(Exception ex)
+            {
+               _logger.LogError(ex, $"{this.GetType().Name} threw an exception with the following description: {ex.Message}");
+            }
+            
         }
     }
 }

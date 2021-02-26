@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Cinematron.Attributes;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -15,8 +16,10 @@ namespace Cinematron.Views.ViewModels
         [Required]
         public string Duration {get; set;}
         [Required]
+        [AllowedExtensions(new string[] { ".jpg", ".png" })]
         public IFormFile Title {get; set;}
         [Required]
+        [AllowedExtensions(new string[] { ".avi", ".mkv", ".mp4" })]
         public IFormFile Movie {get; set;}
     }
 }

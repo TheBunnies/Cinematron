@@ -32,14 +32,13 @@ namespace Cinematron.Controllers
         {
             return View();
         }
-
+        [Route("[Action]")]
         [HttpPost]
         public IActionResult Search(string query)
         { 
-            var watchables = _searchSerivce.Search(query);
+            var watchables = _searchSerivce.Search(query.Trim());
             return View(watchables);
         }
-
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

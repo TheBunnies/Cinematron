@@ -1,4 +1,5 @@
-﻿using Cinematron.DAL.Contracts;
+﻿using Cinematron.Attributes;
+using Cinematron.DAL.Contracts;
 using Cinematron.DAL.Models;
 using Cinematron.Views.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -18,11 +19,13 @@ namespace Cinematron.Controllers
         private readonly IWebHostEnvironment _appEnvironment;
         private readonly IMoviesService _moviesService;
         private readonly IShowsService _showsSerivce;
+
         public AdminController(IWebHostEnvironment appEnvironment, IMoviesService moviesService, IShowsService showsService)
         {
             _appEnvironment = appEnvironment;
             _moviesService = moviesService;
             _showsSerivce = showsService;
+
         }
         public IActionResult MoviesAdminPanel()
         {
@@ -35,27 +38,36 @@ namespace Cinematron.Controllers
         { 
             if (ModelState.IsValid)
             {
-                string titlePath = "/Images/titles/" + model.Title.FileName;
-                using (var fileStream = new FileStream(_appEnvironment.WebRootPath + titlePath, FileMode.Create))
+                try
                 {
-                    await model.Title.CopyToAsync(fileStream);
-                }
-                string videoPath = "/Videos/movies/" + model.Movie.FileName;
-                using (var fileStream = new FileStream(_appEnvironment.WebRootPath + videoPath, FileMode.Create, FileAccess.Write))
-                {
-                    await model.Movie.CopyToAsync(fileStream);
-                }
+                    string titlePath = "/Images/titles/" + model.Title.FileName;
+                    using (var fileStream = new FileStream(_appEnvironment.WebRootPath + titlePath, FileMode.Create))
+                    {
+                        await model.Title.CopyToAsync(fileStream);
+                    }
+                    string videoPath = "/Videos/movies/" + model.Movie.FileName;
+                    using (var fileStream = new FileStream(_appEnvironment.WebRootPath + videoPath, FileMode.Create, FileAccess.Write))
+                    {
+                        await model.Movie.CopyToAsync(fileStream);
+                    }
 
-                var movie = new Movie
+                    var movie = new Movie
+                    {
+                        ThumbnailUrl = titlePath,
+                        VideoUrl = videoPath,
+                        Duration = model.Duration,
+                        Description = model.Description,
+                        Title = model.Name
+                    };
+                    await _moviesService.AddMovieAsync(movie);
+                    ViewBag.Success = "Everything worked as expected :)";
+                }
+                catch(Exception ex)
                 {
-                    ThumbnailUrl = titlePath,
-                    VideoUrl = videoPath,
-                    Duration = model.Duration,
-                    Description = model.Description,
-                    Title = model.Name
-                };
-                await _moviesService.AddMovieAsync(movie);
-                ViewBag.Success = "Everything worked as expected :)";
+                    ViewBag.Success = $"Something went wrong! {ex.Message}";
+                }
+                
+                
             }
             return View(model);
         }
@@ -70,29 +82,37 @@ namespace Cinematron.Controllers
         {
             if (ModelState.IsValid)
             {
-                string titlePath = "/Images/titles/" + model.Title.FileName;
-                using (var fileStream = new FileStream(_appEnvironment.WebRootPath + titlePath, FileMode.Create))
+                try
                 {
-                    await model.Title.CopyToAsync(fileStream);
-                }
-                string rootPath = "/Videos/shows/" + model.Name;
-                Directory.CreateDirectory(_appEnvironment.WebRootPath + rootPath);
-                var show = new Show {
-                    Title = model.Name,
-                    ThumbnailUrl = titlePath,
-                    Duration = model.AverageDuration,
-                    Description = model.Description
-                };
-                await _showsSerivce.AddShowAsync(show);
-                foreach(var episode in model.Episodes)
-                {
-                    using (var fileStream = new FileStream(_appEnvironment.WebRootPath +$"{rootPath}/{episode.FileName}", FileMode.Create))
+                    string titlePath = "/Images/titles/" + model.Title.FileName;
+                    using (var fileStream = new FileStream(_appEnvironment.WebRootPath + titlePath, FileMode.Create))
                     {
-                        await episode.CopyToAsync(fileStream);
+                        await model.Title.CopyToAsync(fileStream);
                     }
-                    await _showsSerivce.AddEpisodeAsync(show, new Episode { VideoUrl = $"{rootPath}/{episode.FileName}"});
+                    string rootPath = "/Videos/shows/" + model.Name;
+                    Directory.CreateDirectory(_appEnvironment.WebRootPath + rootPath);
+                    var show = new Show {
+                        Title = model.Name,
+                        ThumbnailUrl = titlePath,
+                        Duration = model.AverageDuration,
+                        Description = model.Description
+                    };
+                    await _showsSerivce.AddShowAsync(show);
+                    foreach(var episode in model.Episodes)
+                    {
+                        using (var fileStream = new FileStream(_appEnvironment.WebRootPath +$"{rootPath}/{episode.FileName}", FileMode.Create))
+                        {
+                            await episode.CopyToAsync(fileStream);
+                        }
+                        await _showsSerivce.AddEpisodeAsync(show, new Episode { VideoUrl = $"{rootPath}/{episode.FileName}"});
+                    }
+                    ViewBag.Success = "Everything worked as expected :)";
                 }
-                ViewBag.Success = "Everything worked as expected :)";
+                catch(Exception ex)
+                {
+                    ViewBag.Success = $"Something went wrong! {ex.Message}";
+                }
+                
             }
             return View(model);
         }
