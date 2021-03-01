@@ -29,11 +29,11 @@
 
     protected override void OnInitialized()
     {
-        CurrentEpisodeUrl = LinkGenerator.GetPathByAction("GetShow", "Video", new { path = Episodes.FirstOrDefault().VideoUrl });
+        CurrentEpisodeUrl = LinkGenerator.GetPathByAction("GetVideo", "Video", new { path = Episodes.FirstOrDefault().VideoUrl });
     }
     private void ChangeEpisode(int id)
     {
-        CurrentEpisodeUrl = LinkGenerator.GetPathByAction("GetShow", "Video", new { path = Episodes[id].VideoUrl });
+        CurrentEpisodeUrl = LinkGenerator.GetPathByAction("GetVideo", "Video", new { path = Episodes[id].VideoUrl });
         js.InvokeVoidAsync("loadVideo");
     }
 }

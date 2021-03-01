@@ -30,7 +30,7 @@
 <textarea readonly class="text-white">@Model.Description</textarea>
 <div style="display:flex; justify-content: center;">
     <video controls>
-        <source src="@Url.Action("GetMovie", "Video", new { path = Model.VideoUrl})" type="video/mp4">
+        <source src="@Url.Action("GetVideo", "Video", new { path = Model.VideoUrl})" type="video/mp4">
         Your browser does not support the video tag.
     </video>
 </div>

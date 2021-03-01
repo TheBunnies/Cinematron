@@ -19,13 +19,9 @@ namespace Cinematron.Controllers
             _moviesService = moviesService;
             _showsSerivce = showsSerivce;
         }
-        public FileResult GetMovie(string path)
+        public FileResult GetVideo(string path)
         {
              return PhysicalFile($"{_appEnvironment.WebRootPath}{path}", "application/octet-stream", enableRangeProcessing: true);
-        }
-        public FileResult GetShow(string path)
-        {
-            return PhysicalFile($"{_appEnvironment.WebRootPath}{path}", "application/octet-stream", enableRangeProcessing: true);
         }
         [HttpGet]
         public async Task<IActionResult> Movie(int id)
